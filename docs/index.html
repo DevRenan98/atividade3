@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo de Perguntas e Respostas - Carros e Motos</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+
+    #container {
+      max-width: 600px;
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .pergunta {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .resposta {
+      margin-top: 10px;
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      border: 2px solid #3498db;
+      border-radius: 5px;
+      color: #3498db;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .resposta:hover {
+      background-color: #3498db;
+      color: #fff;
+    }
+
+    #mensagem {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <h1>Jogo de Perguntas e Respostas</h1>
+
+  <div id="pergunta1" class="pergunta">
+    <p>Pergunta 1: Qual é a marca de carro mais vendida no mundo?</p>
+    <div class="resposta" onclick="verificarResposta(this, 1)">Toyota</div>
+    <div class="resposta" onclick="verificarResposta(this, 0)">Ford</div>
+    <div class="resposta" onclick="verificarResposta(this, 0)">Chevrolet</div>
+  </div>
+
+  <div id="pergunta2" class="pergunta" style="display: none;">
+    <p>Pergunta 2: Qual é a motocicleta mais vendida do mundo?</p>
+    <div class="resposta" onclick="verificarResposta(this, 0)">Honda CB750</div>
+    <div class="resposta" onclick="verificarResposta(this, 1)">Honda Super Cub</div>
+    <div class="resposta" onclick="verificarResposta(this, 0)">Harley-Davidson Sportster</div>
+  </div>
+
+  <div id="pergunta3" class="pergunta" style="display: none;">
+    <p>Pergunta 3: Em que ano foi lançado o primeiro automóvel?</p>
+    <div class="resposta" onclick="verificarResposta(this, 0)">1900</div>
+    <div class="resposta" onclick="verificarResposta(this, 0)">1910</div>
+    <div class="resposta" onclick="verificarResposta(this, 1)">1886</div>
+  </div>
+
+  <div id="mensagem"></div>
+</div>
+
+<script>
+  var perguntas = document.querySelectorAll('.pergunta');
+  var indexPerguntaAtual = 0;
+  var mensagem = document.getElementById('mensagem');
+
+  function verificarResposta(respostaSelecionada, pontuacao) {
+    mensagem.innerHTML = '';
+    mensagem.style.color = '';
+
+    var respostas = perguntas[indexPerguntaAtual].querySelectorAll('.resposta');
+    for (var i = 0; i < respostas.length; i++) {
+      respostas[i].style.pointerEvents = 'none';
+    }
+
+    pontuacaoTotal += pontuacao;
+
+    mensagem.innerHTML = pontuacao === 1 ? 'Correto!' : 'Incorreto!';
+    mensagem.style.color = pontuacao === 1 ? 'green' : 'red';
+
+    setTimeout(function () {
+      perguntas[indexPerguntaAtual].style.display = 'none';
+      indexPerguntaAtual++;
+
+      if (indexPerguntaAtual < perguntas.length) {
+        perguntas[indexPerguntaAtual].style.display = 'block';
+      } else {
+        mensagem.innerHTML = 'Fim do Jogo! Pontuação Total: ' + pontuacaoTotal;
+      }
+
+      respostas = perguntas[indexPerguntaAtual].querySelectorAll('.resposta');
+      for (var j = 0; j < respostas.length; j++) {
+        respostas[j].style.pointerEvents = 'auto';
+      }
+    }, 1000);
+  }
+
+  var pontuacaoTotal = 0;
+</script>
+
+</body>
+</html>
